@@ -1,22 +1,56 @@
-from enum import Enum, auto
+from enum import Enum
+from transitions import Machine
 
 class EstadoPorta(Enum):
-    ABERTA = auto()
-    FECHADA = auto()
-    TRACADA = auto()
-    DESTRANCADA = auto()
-class Porta:
-    def __init__(self):
-        self.esta_aberta = False
+    ABERTA = "aberta"
+    DESTRANCADA = "destrancada"
+    TRANCADA = "trancada"
 
-    def abrir(self):
-        if not self.esta_aberta:
-            self.esta_aberta = True
-            return "Porta aberta."
-        return "A porta já está aberta."
-    
-    def fechar(self):
-        if self.esta_aberta:
-            self.esta_aberta = False
-            return "Porta fechada."
-        return "A porta já está fechada."
+class Porta:
+    estados = [e.value for e in EstadoPorta]
+
+    transicoes = [
+        {"trigger": "abrir", "source": EstadoPorta.DESTRANCADA.value, "dest": EstadoPorta.ABERTA.value},
+        {"trigger": "fechar", "source": EstadoPorta.ABERTA.value, "dest": EstadoPorta.DESTRANCADA.value},
+        {"trigger": "trancar", "source": EstadoPorta.DESTRANCADA.value, "dest": EstadoPorta.TRANCADA.value, 'conditions': 'pode_trancar'}, 
+        {"trigger": "destrancar", "source": EstadoPorta.TRANCADA.value, "dest": EstadoPorta.DESTRANCADA.value},
+    ]
+
+    def __init__(self, nome, estado_inicial=EstadoPorta.DESTRANCADA.value):
+        self.nome = nome
+        self.tentativas_invalidas = 0
+
+        # Criar máquina de estados
+        self.maquina = Machine(model=self, 
+                               states=Porta.estados, 
+                               transitions=Porta.transicoes,
+                               initial=estado_inicial,
+                               ignore_invalid_triggers=True)
+
+    # Callbacks
+    def on_enter_aberta(self):
+        print("A porta abriu.")
+
+    def on_enter_destrancada(self):
+        print("A porta destrancou.")
+
+    def on_enter_trancada(self):
+        print("A porta trancou.")
+
+    # Regras extras
+    def pode_trancar(self):
+        if self.state == EstadoPorta.ABERTA.value:
+            self.tentativas_invalidas += 1
+            print("⚠️ Tentativa inválida! Não pode trancar a porta aberta.")
+            return False
+        else:
+            return True
+
+# Exemplo de uso
+porta = Porta("Entrada")
+
+porta.abrir()      # "A porta abriu."
+porta.trancar()    # "⚠️ Tentativa inválida! Não pode trancar a porta aberta."
+print(porta.tentativas_invalidas)  # 1
+porta.fechar()     # "A porta destrancou."
+porta.trancar()    # "A porta trancou."
