@@ -25,16 +25,16 @@ class Porta:
                                states=Porta.estados, 
                                transitions=Porta.transicoes,
                                initial=estado_inicial,
-                               ignore_invalid_triggers=True)
+                               on_exception='pode_trancar')
 
     # Callbacks
-    def on_enter_aberta(self):
+    def on_enter_ABERTA(self):
         print("A porta abriu.")
 
-    def on_enter_destrancada(self):
+    def on_enter_DESTRANCADA(self):
         print("A porta destrancou.")
 
-    def on_enter_trancada(self):
+    def on_enter_TRANCADA(self):
         print("A porta trancou.")
 
     # Regras extras
