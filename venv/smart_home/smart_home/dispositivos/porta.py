@@ -1,31 +1,36 @@
 from enum import Enum
 from transitions import Machine
 
+
 class EstadoPorta(Enum):
     ABERTA = "aberta"
     DESTRANCADA = "destrancada"
     TRANCADA = "trancada"
 
+
 class Porta:
-    estados = [e.value for e in EstadoPorta]
+    # agora usamos diretamente os Enums
+    estados = list(EstadoPorta)
 
     transicoes = [
-        {"trigger": "abrir", "source": EstadoPorta.DESTRANCADA.value, "dest": EstadoPorta.ABERTA.value},
-        {"trigger": "fechar", "source": EstadoPorta.ABERTA.value, "dest": EstadoPorta.DESTRANCADA.value},
-        {"trigger": "trancar", "source": EstadoPorta.DESTRANCADA.value, "dest": EstadoPorta.TRANCADA.value, 'conditions': 'pode_trancar'}, 
-        {"trigger": "destrancar", "source": EstadoPorta.TRANCADA.value, "dest": EstadoPorta.DESTRANCADA.value},
+        {"trigger": "abrir", "source": EstadoPorta.DESTRANCADA, "dest": EstadoPorta.ABERTA},
+        {"trigger": "fechar", "source": EstadoPorta.ABERTA, "dest": EstadoPorta.DESTRANCADA},
+        {"trigger": "trancar", "source": EstadoPorta.DESTRANCADA, "dest": EstadoPorta.TRANCADA, "conditions": "pode_trancar"},
+        {"trigger": "destrancar", "source": EstadoPorta.TRANCADA, "dest": EstadoPorta.DESTRANCADA},
     ]
 
-    def __init__(self, nome, estado_inicial=EstadoPorta.DESTRANCADA.value):
+    def __init__(self, nome, estado_inicial=EstadoPorta.DESTRANCADA):
         self.nome = nome
         self.tentativas_invalidas = 0
 
         # Criar máquina de estados
-        self.maquina = Machine(model=self, 
-                               states=Porta.estados, 
-                               transitions=Porta.transicoes,
-                               initial=estado_inicial,
-                               on_exception='pode_trancar')
+        self.maquina = Machine(
+            model=self,
+            states=Porta.estados,
+            transitions=Porta.transicoes,
+            initial=estado_inicial,
+            on_exception='pode_trancar'
+        )
 
     # Callbacks
     def on_enter_ABERTA(self):
@@ -39,18 +44,20 @@ class Porta:
 
     # Regras extras
     def pode_trancar(self):
-        if self.state == EstadoPorta.ABERTA.value:
+        if self.state == EstadoPorta.ABERTA:
             self.tentativas_invalidas += 1
-            print("⚠️ Tentativa inválida! Não pode trancar a porta aberta.")
+            print("⚠️ Tentativa inválida! Não pode trancar a porta aberta, precisa estar destrancada.")
             return False
-        else:
-            return True
+        return True
+
 
 # Exemplo de uso
-porta = Porta("Entrada")
+if __name__ == "__main__":
+    porta = Porta("Entrada")
 
-porta.abrir()      # "A porta abriu."
-porta.trancar()    # "⚠️ Tentativa inválida! Não pode trancar a porta aberta."
-print(porta.tentativas_invalidas)  # 1
-porta.fechar()     # "A porta destrancou."
-porta.trancar()    # "A porta trancou."
+    porta.abrir()      # "A porta abriu."
+    porta.trancar()    # "⚠️ Tentativa inválida! Não pode trancar a porta aberta."
+    porta.trancar()
+    print(porta.tentativas_invalidas)  # 1
+    porta.fechar()     # "A porta destrancou."
+    porta.trancar()    # "A porta trancou."
