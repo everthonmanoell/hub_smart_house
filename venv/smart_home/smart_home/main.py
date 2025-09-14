@@ -1,1 +1,0 @@
-from smart_home.core.descriptors import 

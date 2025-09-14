@@ -1,0 +1,113 @@
+{
+  "hub": {
+    "nome": "Casa Exemplo",
+    "versao": "1.0"
+  },
+  "dispositivos": [
+    {
+      "id": "luz_sala",
+      "tipo": "LIGHT",
+      "nome": "Luz da Sala",
+      "estado": "off",
+      "atributos": {
+        "brilho": 80,
+        "cor": "NEUTRA"
+      }
+    },
+    {
+      "id": "luz_quarto",
+      "tipo": "LIGHT",
+      "nome": "Luz do Quarto",
+      "estado": "off",
+      "atributos": {
+        "brilho": 100,
+        "cor": "FRIA"
+      }
+    },
+    {
+      "id": "porta_principal",
+      "tipo": "DOOR",
+      "nome": "Porta Principal",
+      "estado": "trancada",
+      "atributos": {
+        "tentativas_invalidas": 0
+      }
+    },
+    {
+      "id": "alarme_casa",
+      "tipo": "ALARM",
+      "nome": "Alarme da Casa",
+      "estado": "on",
+      "atributos": {}
+    },
+    {
+      "id": "tv_sala",
+      "tipo": "TV",
+      "nome": "TV da Sala",
+      "estado": "in_use",
+      "atributos": {
+        "potencia_w": 110
+      }
+    },
+    {
+      "id": "7",
+      "tipo": "MICROWAVE",
+      "nome": "microondas",
+      "estado": "on",
+      "atributos": {
+        "potencia_w": 1100
+      }
+    }
+  ],
+  "rotinas": {
+    "modo_noite": [
+      {
+        "id": "porta_principal",
+        "comando": "trancar"
+      },
+      {
+        "id": "luz_sala",
+        "comando": "desligar"
+      },
+      {
+        "id": "luz_quarto",
+        "comando": "desligar"
+      },
+      {
+        "id": "alarme_casa",
+        "comando": "ligar"
+      }
+    ],
+    "acordar": [
+      {
+        "id": "alarme_casa",
+        "comando": "desligar"
+      },
+      {
+        "id": "luz_quarto",
+        "comando": "ligar"
+      },
+      {
+        "id": "luz_quarto",
+        "comando": "definir_brilho",
+        "argumentos": {
+          "brilho": 60
+        }
+      }
+    ],
+    "modo_cinema": [
+      {
+        "id": "luz_sala",
+        "comando": "desligar"
+      },
+      {
+        "id": "tv_sala",
+        "comando": "ligar"
+      },
+      {
+        "id": "tv_sala",
+        "comando": "usar"
+      }
+    ]
+  }
+}
