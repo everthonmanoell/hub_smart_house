@@ -7,7 +7,7 @@ from .eventos import Evento, TipoEvento
 
 class CSVLogger(Observer):
     _instance = None
-    _lock = Lock()
+    _lock = Lock() #para assegurar consistência no uso do logger quando usar threads
 
     def __new__(cls, *args, **kwargs):
         if not cls._instance:

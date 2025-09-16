@@ -90,8 +90,8 @@ def main():
                         print(f"  ID: {dev.id:<15} | Nome: {dev.nome:<20} | Tipo: {dev.tipo.value:<10} | Estado: {dev.state}")
                     print("---------------------------------")
             
-            # As opções 2 a 5 não precisam de alteração
-            elif opcao == '2':
+            
+            elif opcao == '2': #2. Mostrar dispositivo
                 id_dev = input("ID do dispositivo: ")
                 dev = hub.get_dispositivo(id_dev)
                 print("\n--- Detalhes do Dispositivo ---")
@@ -267,7 +267,7 @@ def main():
                 id_novo = input("id (sem espacos): ")
                 nome_novo = input("nome: ")
                 
-                # ===== CORREÇÃO CRÍTICA APLICADA AQUI =====
+                
                 try:
                     # 1. Converte a string do tipo para o Enum correspondente
                     tipo_enum = TipoDispositivo[tipo_str]

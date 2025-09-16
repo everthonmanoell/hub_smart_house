@@ -89,7 +89,7 @@ def relatorio_dispositivos_mais_usados(eventos: List[Dict[str, Any]]) -> List[tu
     if not eventos:
         return []
     
-    # 1. USA GENERATOR EXPRESSION (uma forma de comprehension) para contar
+    # 1. USA GENERATOR EXPRESSION (comprehension) para contar
     contagem = Counter(e['id_dispositivo'] for e in eventos)
     
     # 2. USA SORTED com uma função lambda como chave para ordenar os itens do mais para o menos usado
