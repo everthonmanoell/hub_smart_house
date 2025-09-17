@@ -36,7 +36,7 @@ class Tomada(Dispositivo):
 
     potencia_w = PotenciaWDescriptor()
 
-    def __init__(self, id: str, nome: str, potencia_w: int, estado_inicial=EstadoTomada.OFF.value):
+    def __init__(self, id: str, nome: str, potencia_w: int, estado_inicial=EstadoTomada.OFF):
         super().__init__(id, nome, TipoDispositivo.OUTLET)
         self.potencia_w = potencia_w
         self._consumo_wh = 0
@@ -45,7 +45,7 @@ class Tomada(Dispositivo):
             model=self,
             states=Tomada.estados,
             transitions=Tomada.transicoes,
-            initial=estado_inicial,
+            initial=estado_inicial.value,
             auto_transitions=False
             
         )

@@ -4,7 +4,7 @@ from smart_home.core.dispositivos import Dispositivo, TipoDispositivo
 from smart_home.core.erros import AtributoInvalidoError
 
 
-class BrilhoDescriptor:
+class BrilhoDescriptor: #XXX
     def __set_name__(self, owner, name):
         self.private_name = '_' + name
     
@@ -19,7 +19,7 @@ class BrilhoDescriptor:
         setattr(instance, self.private_name, value)
 
 
-class CorDescriptor:
+class CorDescriptor:#XXX
     def __set_name__(self, owner, name):
         self.private_name = '_' + name
     
@@ -45,10 +45,10 @@ class Cor(Enum):
     NEUTRA = "neutra"
 
 
-class Luz(Dispositivo):
+class Luz(Dispositivo): #XXX 
     estados = [e.value for e in EstadoLuz]
 
-    transicoes = [
+    transicoes = [#XXX
         {"trigger": "ligar", "source": EstadoLuz.OFF.value, "dest": EstadoLuz.ON.value},
         {"trigger": "desligar", "source": EstadoLuz.ON.value, "dest": EstadoLuz.OFF.value},
         {"trigger": "definir_brilho", "source": EstadoLuz.ON.value, "dest": EstadoLuz.ON.value, "conditions": "validar_brilho"},
@@ -66,7 +66,7 @@ class Luz(Dispositivo):
             model=self,
             states=Luz.estados,
             transitions=Luz.transicoes,
-            initial=estado_inicial,
+            initial=estado_inicial.value,
             auto_transitions=False
             
         )

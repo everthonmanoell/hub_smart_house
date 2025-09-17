@@ -33,7 +33,7 @@ class HubAutomacao:
     def adicionar_observer(self, observer: Observer):
         self._observers.append(observer)
 
-    def _notificar(self, evento: Evento):
+    def _notificar(self, evento: Evento): #XXX
         for observer in self._observers:
             observer.update(evento)
 

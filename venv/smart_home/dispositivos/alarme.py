@@ -26,7 +26,7 @@ class Alarme(Dispositivo):
             model = self,
             states= Alarme.estados,
             transitions= Alarme.transicoes,
-            initial=estado_inicial,
+            initial=estado_inicial.value,
             auto_transitions=False
             
         )

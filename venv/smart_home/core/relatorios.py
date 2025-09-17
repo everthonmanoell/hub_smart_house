@@ -76,7 +76,7 @@ def relatorio_consumo_tomada(eventos: List[Dict[str, Any]], dispositivos: List[A
         
         # 1. USA MAP (implícito na list comprehension acima) para criar a lista de consumos
         # 2. USA REDUCE para somar todos os consumos parciais e obter o total
-        consumo_total = reduce(lambda acumulador, valor: acumulador + valor, consumos_parciais, 0)
+        consumo_total = reduce(lambda acumulador, valor: acumulador + valor, consumos_parciais, 0) #XXX 
         report[tomada.id] = round(consumo_total, 4)
         
     return report
@@ -112,13 +112,13 @@ def relatorio_distribuicao_comandos_por_tipo(eventos: List[Dict[str, Any]], disp
         evento['tipo_dispositivo'] = id_para_tipo.get(evento['id_dispositivo'], 'DESCONHECIDO')
 
     # Ordena por tipo para que groupby funcione corretamente
-    eventos_ordenados = sorted(eventos, key=lambda e: e['tipo_dispositivo'])
+    eventos_ordenados = sorted(eventos, key=lambda e: e['tipo_dispositivo']) #XXX 
     
     report = defaultdict(Counter)
     # 1. USA GROUPBY para agrupar todos os eventos por tipo de dispositivo
     for tipo, eventos_do_tipo in groupby(eventos_ordenados, key=lambda e: e['tipo_dispositivo']):
         # 2. USA COUNTER com GENERATOR EXPRESSION para contar os comandos dentro de cada grupo
-        contador_comandos = Counter(e['evento'] for e in eventos_do_tipo)
+        contador_comandos = Counter(e['evento'] for e in eventos_do_tipo) 
         report[tipo] = dict(contador_comandos)
         
     return dict(report)
@@ -129,10 +129,10 @@ def relatorio_tentativas_invalidas_porta(dispositivos: List[Any]) -> Dict[str, i
     Este dado vem diretamente do estado do objeto, não dos logs.
     Usa FILTER para pegar as portas e DICT COMPREHENSION para montar o relatório.
     """
-    # 1. USA FILTER para obter apenas os dispositivos que são Portas
+    # 1. USA FILTER para obter apenas os dispositivos que são Portas #XXX
     portas = filter(lambda d: isinstance(d, Porta), dispositivos)
     
-    # 2. USA DICT COMPREHENSION para criar o dicionário de resultado
+    # 2. USA DICT COMPREHENSION para criar o dicionário de resultado #XXX
     report = {
         porta.id: porta.tentativas_invalidas
         for porta in portas if porta.tentativas_invalidas > 0

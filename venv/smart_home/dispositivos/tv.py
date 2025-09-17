@@ -42,7 +42,7 @@ class Tv(Dispositivo): # <-- HERDADO DE DISPOSITIVO
             model=self,
             states=Tv.estados,
             transitions=Tv.transicoes,
-            initial=estado_inicial,
+            initial=estado_inicial.value,
             auto_transitions=False
             
         )

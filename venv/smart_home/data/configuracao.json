@@ -46,7 +46,7 @@
       "nome": "TV da Sala",
       "estado": "in_use",
       "atributos": {
-        "potencia_w": 110
+        "potencia_w": 220
       }
     },
     {
@@ -55,7 +55,7 @@
       "nome": "microondas",
       "estado": "on",
       "atributos": {
-        "potencia_w": 1100
+        "potencia_w": 1000
       }
     }
   ],

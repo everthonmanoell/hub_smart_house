@@ -1,3 +1,16 @@
 timestamp,id_dispositivo,evento,estado_origem,estado_destino
 2025-09-14T15:37:16.059267,luz_sala,ligar,off,on
 2025-09-14T15:37:26.407637,luz_sala,desligar,on,off
+2025-09-16T19:48:01.434772,7,desligar,on,off
+2025-09-16T19:54:57.908951,7,ligar,off,on
+2025-09-16T19:55:37.191405,alarme_casa,desligar,on,off
+2025-09-16T19:55:37.191993,luz_quarto,ligar,off,on
+2025-09-16T21:14:34.987005,luz_quarto,desligar,on,off
+2025-09-16T21:14:34.987346,alarme_casa,ligar,off,on
+2025-09-16T21:15:21.241047,7,usar,on,in_use
+2025-09-16T21:15:34.246251,7,parar,in_use,on
+2025-09-16T21:16:00.672547,luz_quarto,desligar,on,off
+2025-09-16T21:16:00.672896,alarme_casa,ligar,off,on
+2025-09-16T21:29:47.172845,luz_sala,ligar,off,on
+2025-09-16T21:41:41.477601,1,ligar,off,on
+2025-09-16T21:45:05.274015,1,ligar,off,on
